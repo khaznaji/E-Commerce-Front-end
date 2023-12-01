@@ -1,0 +1,51 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{ selectedCategory ? 'Update Category' : 'Add Category' }}</h4>
+              
+              <form class="forms-sample" #form="ngForm" (ngSubmit)="createCategory()">
+                <div class="form-group">
+                  <label for="exampleInputUsername1">Name</label>
+                  <input type="text" class="form-control" type="text" id="categoryName" [(ngModel)]="newCategoryName" name="newCategoryName" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary mr-2">{{ selectedCategory ? 'Save' : 'Submit' }}</button>
+                <button type="button" class="btn btn-light" (click)="cancelUpdate()">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">List Of Categories</h4>
+              
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let category of categories">
+                      <td>{{ category.name }}</td>
+                      <td>
+                        <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
+                        <button type="button" class="btn btn-inverse-success btn-fw" (click)="editCategory(category)">Update</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
