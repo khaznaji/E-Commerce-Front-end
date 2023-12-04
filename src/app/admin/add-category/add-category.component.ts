@@ -23,16 +23,21 @@ export class AddCategoryComponent implements OnInit {
 
   constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
   reloadData() {
+    // Chargez toutes les catégories (à adapter selon vos besoins)
     this.categoryService.getAll().subscribe(
       (res: Category[]) => {
         this.categories = res;
-        console.log(res);
+        this.applyFilter(); // Appliquez le filtre initial
       },
       (error) => {
         console.error('Error fetching categories:', error);
       }
     );
   }
+  filterOption: 'all' | 'archive' | 'nonArchive' = 'all';
+
+  // Utilisez cette propriété pour stocker les catégories filtrées
+  filteredCategories: Category[] = [];
   selectedImage: File | null = null;
   imagePreview: string | undefined;
 
@@ -53,10 +58,24 @@ export class AddCategoryComponent implements OnInit {
    createCategory() {
     if (!this.selectedCategory) { 
       if (!this.newCategory.name || !this.file) {
-        console.error('Invalid category or image.');
+        console.error(' category or image.');
+        this.toastr.error('Invalid image ', '', {
+          positionClass: 'toast-top-center',
+          timeOut: 5000,
+          progressBar: true,
+          toastClass: 'ngx-toastre',
+        });
         return;
       }
-  
+      if (this.categories.some((category: Category) => category.name === this.newCategory.name)) {
+        this.toastr.error('Category with this name already exists', '', {
+          positionClass: 'toast-top-center',
+          timeOut: 5000,
+          progressBar: true,
+          toastClass: 'ngx-toastre',
+        });
+        return;
+      }
       this.categoryService.createCategory(this.newCategory, this.file).subscribe(
         (data) => {
           console.log('Category created successfully!', data);
@@ -234,4 +253,34 @@ export class AddCategoryComponent implements OnInit {
       fileInput.click();
     }
   }
+  toggleArchive(categoryId: number): void {
+    this.categoryService.toggleArchive(categoryId).subscribe(
+      (response) => {
+        console.log('Archivage basculé avec succès.', response);
+        // Mettez à jour votre vue si nécessaire
+      },
+      (error) => {
+        console.error('Erreur lors du basculement de l\'archivage.', error);
+        // Gérez l'erreur selon vos besoins
+      }
+    );
+  }
+  applyFilter() {
+    switch (this.filterOption) {
+      case 'all':
+        this.filteredCategories = this.categories;
+        break;
+      case 'archive':
+        this.filteredCategories = this.categories.filter((category: Category) => category.archive);
+        break;
+      case 'nonArchive':
+        this.filteredCategories = this.categories.filter((category: Category) => !category.archive);
+        break;
+      default:
+        this.filteredCategories = this.categories;
+        break;
+    }
+  }
+  
+  
 }

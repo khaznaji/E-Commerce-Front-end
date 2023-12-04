@@ -32,4 +32,10 @@ export class CategoryService {
       formData.append('image', image, image.name);
       return this.http.put<any>(`${this.apiUrl}/${id}`, formData);
     }
+    toggleArchive(categoryId: number ): Observable<any> {
+      const url = `${this.apiUrl}/toggle-archive/${categoryId}`;
+  
+      // Envoyer une requête HTTP PUT pour basculer l'archivage
+      return this.http.put<any>(url, {});
+    }
 }

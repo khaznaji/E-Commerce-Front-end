@@ -90,20 +90,6 @@
     <label for="exampleInputUsername1">Name</label>
     <input type="text"class="form-control" id="name" name="name" [(ngModel)]="newCategory.name" required />
   </div>
- <!-- <div class="form-group file-input-wrapper">
-    <label for="exampleInputUsername1">Image</label>
-    <div class="input-group">
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" id="image" name="image" (change)="onFileSelected($event)" accept="image/*" required />
-        <label class="custom-file-label" for="image">Choose file</label>
-      </div>
-     
-    </div>
-    <div *ngIf="file" class="file-name mt-2">Selected Image: {{ file.name }}</div>
-    <div *ngIf="imagePreview">
-        <img [src]="imagePreview" alt="Preview" style="max-width: 200px; max-height: 200px;">
-    </div>
-  </div>-->
  <div class="form-group file-input-wrapper ">
   <label for="exampleInputUsername1">Image</label>
 
@@ -152,38 +138,58 @@
   
         <!-- Liste des catégories -->
         <div class="col-md-">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">List Of Categories</h4>
-              <button type="button" class="btn btn-primary" (click)="showAddCategoryModal()">ADD</button>
-
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">List Of Categories</h4>
+          
+                <!-- Ajoutez le sélecteur de filtre -->
+                <div>
+                    <label for="filterSelect" class="form-label">Filter:    </label>
+                    <select class="form-select form-select-lg" id="filterSelect" [(ngModel)]="filterOption" (change)="applyFilter()">
+                      <option value="all">All</option>
+                      <option value="archive">Archived</option>
+                      <option value="nonArchive">Unarchived</option>
+                    </select>
+                  </div>
+          
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn btn-primary" (click)="showAddCategoryModal()">+ Category</button>
+                  </div>          
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
                         <th>Image</th>
+                        <th>Name</th>
+                        <th>Archived/Unarchived</th>
 
-                      <th>Name</th>
-
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let category of categories">
-                        <td> <img src="../../../assets/E-Commerce Image/{{ category.imageUrl }}" style="width: 45px; height: 45px"
-                            class="rounded-circle" /></td>
-                      <td>{{ category.name }}</td>
-                     <td>
-                        <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
-                        <button type="button" class="btn btn-inverse-success btn-fw" (click)="showAddCategoryModal()"(click)="editCategory(category)">Update</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let category of filteredCategories">
+                        
+                        <td>
+                          <img src="../../../assets/E-Commerce Image/{{ category.imageUrl }}" style="width: 45px; height: 45px"
+                            class="rounded-circle" />
+                        </td>
+                        <td>{{ category.name }}</td>
+                        <td>
+                            <input type="checkbox" [(ngModel)]="category.archive" (change)="toggleArchive(category.id)" />
+                          </td>
+                        <td>
+                          <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
+                          <button type="button" class="btn btn-inverse-success btn-fw"
+                            (click)="showAddCategoryModal()"(click)="editCategory(category)">Update</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          
       </div>
     </div>
   

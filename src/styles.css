@@ -11,3 +11,15 @@
     border-radius: 5px; /* Ajoute des coins arrondis */
     z-index: 1000;
 }
+.ngx-toastre {
+    background-color: rgb(167, 40, 40); /* Fond vert */
+    color: #ffffff; /* Texte blanc */
+    position: fixed;
+    top: 60px; /* Ajustez cette valeur selon la hauteur de votre barre de navigation */
+    right: 10px; /* Ajoute une marge à droite */
+    width: 300px; /* Ajustez la largeur selon vos besoins */
+    padding: 15px; /* Ajoute du rembourrage pour un meilleur aspect */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ajoute une légère ombre */
+    border-radius: 5px; /* Ajoute des coins arrondis */
+    z-index: 1000;
+}
