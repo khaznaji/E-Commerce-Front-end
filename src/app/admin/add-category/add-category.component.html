@@ -1,42 +1,181 @@
-<div class="main-panel">
-    <div class="content-wrapper">
-      <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
+<style>
+    /* Ajoutez ces styles à votre fichier CSS ou à votre balise style dans le composant Angular */
+/* Add these styles to your component's CSS file or global styles */
+
+.file-input-wrapper {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drag-drop-area {
+  border: 2px dashed #ccc;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  cursor: pointer;
+  color: #777;
+  transition: border-color 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-drop-area.drag-over {
+  border-color: #4caf50; /* Change border color when dragging over */
+}
+
+/* Optional: Add styles for better visual feedback */
+.custom-file {
+  margin-top: 10px;
+}
+
+/* Optional: Style the file input button */
+.custom-file-label::after {
+  content: 'Browse';
+}
+
+/* Optional: Add styles for selected file display */
+.file-preview {
+  position: relative;
+  width: 100%; /* Adjust the width as needed */
+  height: 100%; /* Adjust the height as needed */
+  overflow: hidden;
+}
+/* Add these styles to your component's CSS file or global styles */
+
+.preview-image {
+  max-width: 100%; /* Adjust the maximum width as needed */
+  max-height: 100%; /* Adjust the maximum height as needed */
+  display: block;
+  margin: auto;
+}
+
+/* Add styles to make the image take the same frame as the drag and drop area */
+.file-preview {
+  position: relative;
+  width: 100%; /* Adjust the width as needed */
+  height: 200px; /* Adjust the height as needed */
+  overflow: hidden;
+}
+
+.file-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  background-color: grey;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+}
+
+
+</style>
+
+<div class="card mx-auto text-center" *ngIf="isAddCategoryModalVisible" tabindex="-1" role="dialog">
+    <div class="card-body">
+<h4 class="card-title">{{ selectedCategory ? 'Update Category' : 'Add Category' }}</h4>
+<form class="forms-sample" #form="ngForm" (ngSubmit)="createCategory()">
+  <div class="form-group">
+    <label for="exampleInputUsername1">Name</label>
+    <input type="text"class="form-control" id="name" name="name" [(ngModel)]="newCategory.name" required />
+  </div>
+ <!-- <div class="form-group file-input-wrapper">
+    <label for="exampleInputUsername1">Image</label>
+    <div class="input-group">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="image" name="image" (change)="onFileSelected($event)" accept="image/*" required />
+        <label class="custom-file-label" for="image">Choose file</label>
+      </div>
+     
+    </div>
+    <div *ngIf="file" class="file-name mt-2">Selected Image: {{ file.name }}</div>
+    <div *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Preview" style="max-width: 200px; max-height: 200px;">
+    </div>
+  </div>-->
+ <div class="form-group file-input-wrapper ">
+  <label for="exampleInputUsername1">Image</label>
+
+  <!-- Drag and Drop Area -->
+  <div
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    [class.drag-over]="isDragOver"
+    class="drag-drop-area"
+  >
+    <div *ngIf="!file" (click)="openFileInput()">Drop your image here or click to select</div>
+    <div *ngIf="file" class="file-preview">
+      <img [src]="imagePreview" alt="Preview" />
+      <span (click)="removeImage()" class="remove-icon">X</span>
+    </div>
+  </div>
+
+  <!-- File Input -->
+  <div class="input-group custom-file">
+    <input
+      type="file"
+      class="custom-file-input"
+      id="image"
+      name="image"
+      #fileInput
+      (change)="onFileSelected2($event)"
+      accept="image/*"
+      required
+    />
+  </div>
+</div>
+
+  
+  
+  <button type="submit" class="btn btn-primary mr-2">{{ selectedCategory ? 'Save' : 'Submit' }}</button>
+  <button type="button" class="btn btn-light"  (click)="closeAddCategoryModal()"(click)="cancelUpdate()">Cancel</button>
+</form>
+</div></div>
+        <br>
+        <!-- Formulaire -->
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">{{ selectedCategory ? 'Update Category' : 'Add Category' }}</h4>
-              
-              <form class="forms-sample" #form="ngForm" (ngSubmit)="createCategory()">
-                <div class="form-group">
-                  <label for="exampleInputUsername1">Name</label>
-                  <input type="text" class="form-control" type="text" id="categoryName" [(ngModel)]="newCategoryName" name="newCategoryName" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary mr-2">{{ selectedCategory ? 'Save' : 'Submit' }}</button>
-                <button type="button" class="btn btn-light" (click)="cancelUpdate()">Cancel</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 grid-margin stretch-card">
+             
+            
+  
+        <!-- Liste des catégories -->
+        <div class="col-md-">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">List Of Categories</h4>
-              
+              <button type="button" class="btn btn-primary" (click)="showAddCategoryModal()">ADD</button>
+
               <div class="table-responsive">
                 <table class="table table-striped">
                   <thead>
                     <tr>
+                        <th>Image</th>
+
                       <th>Name</th>
+
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let category of categories">
+                        <td> <img src="../../../assets/E-Commerce Image/{{ category.imageUrl }}" style="width: 45px; height: 45px"
+                            class="rounded-circle" /></td>
                       <td>{{ category.name }}</td>
-                      <td>
+                     <td>
                         <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
-                        <button type="button" class="btn btn-inverse-success btn-fw" (click)="editCategory(category)">Update</button>
+                        <button type="button" class="btn btn-inverse-success btn-fw" (click)="showAddCategoryModal()"(click)="editCategory(category)">Update</button>
                       </td>
                     </tr>
                   </tbody>
@@ -47,5 +186,4 @@
         </div>
       </div>
     </div>
-  </div>
   
