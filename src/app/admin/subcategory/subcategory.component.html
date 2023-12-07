@@ -84,51 +84,31 @@
 
 <div class="card mx-auto text-center" *ngIf="isAddCategoryModalVisible" tabindex="-1" role="dialog">
     <div class="card-body">
-<h4 class="card-title">{{ selectedCategory ? 'Update Category' : 'Add Category' }}</h4>
-<form class="forms-sample" #form="ngForm" (ngSubmit)="createCategory()">
+<h4 class="card-title">{{ selected ? 'Update Category' : 'Add Category' }}</h4>
+<form class="forms-sample" #form="ngForm" (ngSubmit)="addProject()">
   <div class="form-group">
     <label for="exampleInputUsername1">Name</label>
-    <input type="text"class="form-control" id="name" name="name" [(ngModel)]="newCategory.name" required />
+    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="project.name" required />
   </div>
- <div class="form-group file-input-wrapper ">
-  <label for="exampleInputUsername1">Image</label>
-
-  <!-- Drag and Drop Area -->
-  <div
-    (dragover)="onDragOver($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)"
-    [class.drag-over]="isDragOver"
-    class="drag-drop-area"
-  >
-    <div *ngIf="!file" (click)="openFileInput()">Drop your image here or click to select</div>
-    <div *ngIf="file" class="file-preview">
-      <img [src]="imagePreview" alt="Preview" />
-      <span (click)="removeImage()" class="remove-icon">X</span>
-    </div>
+  <div class="form-group">
+    <label for="exampleInputUsername1">Description</label>
+    <input type="text" class="form-control" id="description" name="description" [(ngModel)]="project.description" required />
   </div>
 
-  <!-- File Input -->
-  <div class="input-group custom-file">
-    <input
-      type="file"
-      class="custom-file-input"
-      id="image"
-      name="image"
-      #fileInput
-      (change)="onFileSelected2($event)"
-      accept="image/*"
-      required
-    />
+  <div class="form-group">
+    <label for="exampleInputUsername1">Categories</label>
+    <select class="form-control" id="categorie" [(ngModel)]="selectedCategory" name="categorie" required>
+      <option *ngFor="let categorie of categoriess" [value]="categorie.id">{{ categorie.name }}</option>
+    </select>
   </div>
-</div>
 
-  
-  
-  <button type="submit" class="btn btn-primary mr-2">{{ selectedCategory ? 'Save' : 'Submit' }}</button>
-  <button type="button" class="btn btn-light"  (click)="closeAddCategoryModal()"(click)="cancelUpdate()">Cancel</button>
+  <button type="submit" class="btn btn-primary mr-2">{{ selected ? 'Save' : 'Submit' }}</button>
+  <button type="button" class="btn btn-light" (click)="closeAddCategoryModal()" (click)="cancelUpdate()">Cancel</button>
 </form>
+
 </div></div>
+        <br>
+        <!-- Formulaire -->
         <br>
         <!-- Formulaire -->
           <div class="card">
@@ -140,12 +120,10 @@
         <div class="col-md-">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">List Of Categories</h4>
+                <h4 class="card-title">List Of Subcategories</h4>
                 <div class="d-flex justify-content-end mb-3">
-                  <button type="button" class="btn btn-danger" (click)="deleteAllSubcategories()"> Delete All Categories</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteAllSubcategories()"> Delete All Subcategories</button>
 </div>
-                <div>
-                <!-- Ajoutez le sélecteur de filtre -->
                 <div>
                     <label for="filterSelect" class="form-label">Filter:    </label>
                     <select class="form-select form-select-lg" id="filterSelect" [(ngModel)]="filterOption" (change)="applyFilter()">
@@ -154,51 +132,47 @@
                       <option value="nonArchive">Unarchived</option>
                     </select>
                   </div>
-          
-                  <div class="d-flex justify-content-end mb-3">
-                    <button type="button"  class="btn btn-inverse-primary" (click)="showAddCategoryModal()">+ Category</button>
-                    &nbsp;                    <button type="button" class="btn btn-inverse-danger "(click)="deleteSelectedSubcategories()">Delete Selected</button>
 
-                  </div>          
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn btn-inverse-primary" (click)="showAddCategoryModal()">+ SubCategory</button>
+&nbsp;                    <button type="button" class="btn btn-inverse-danger "(click)="deleteSelectedSubcategories()">Delete Selected</button>
+                
+</div>          
                 <div class="table-responsive">
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>Image</th>
                         <th>Name</th>
+                        <th>Description</th>
+                        <th>Category Name</th>
                         <th>Archived/Unarchived</th>
-
                         <th>Actions</th>
                         <th>Select To delete Multiple</th>
-
                       </tr>
                     </thead>
-                    <tbody *ngIf="filteredCategories.length > 0; else noCategoriesFound">
-                      <tr *ngFor="let category of filteredCategories">
-                        <td>
-                          <img src="../../../assets/E-Commerce Image/{{ category.imageUrl }}" style="width: 45px; height: 45px"
-                            class="rounded-circle" />
-                        </td>
-                        <td>{{ category.name }}</td>
-                        <td>
-                          <input type="checkbox" [(ngModel)]="category.archive" (change)="toggleArchive(category.id)" />
-                        </td>
-                        <td>
-                          <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
-                          <button type="button" class="btn btn-inverse-success btn-fw"
-                            (click)="showAddCategoryModal()"(click)="editCategory(category)">Update</button>
-                        </td>
-                        <td>
-                          <input type="checkbox" [checked]="subcategoryIdsToDelete.includes(category.id!)" (change)="toggleDelete(category.id)">
-                        </td>
+                    <tbody *ngIf="categories.length > 0; else noSubcategoriesFound">
+                      <tr *ngFor="let subcategory of categories">
+                        <!-- Check if the item should be displayed based on the filterOption -->
+                        <ng-container *ngIf="filterOption === 'all' || (filterOption === 'archive' && subcategory.archive) || (filterOption === 'nonArchive' && !subcategory.archive)">
+                          <td>{{ subcategory.name }}</td>
+                          <td>{{ subcategory.description }}</td>
+                          <td>{{ getCategoryName(subcategory.categoryId) }}</td>
+                          <td>{{ subcategory.archive ? 'Archived' : 'Unarchived' }}</td>
+                          <td>
+                            <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(subcategory.id)">Delete</button>
+                            <button type="button" class="btn btn-inverse-success btn-fw" (click)="showAddCategoryModal()" (click)="editCategory(subcategory)">Update</button>
+                          </td>
+                          <td>
+                            <input type="checkbox" [checked]="subcategoryIdsToDelete.includes(subcategory.id!)" (change)="toggleDelete(subcategory.id)">
+                          </td>
+                        </ng-container>
                       </tr>
                     </tbody>
-                    <ng-template #noCategoriesFound>
+                    <ng-template #noSubcategoriesFound>
                       <tr>
-                        <td colspan="5">No categories found</td>
+                        <td colspan="6">No subcategories found</td>
                       </tr>
                     </ng-template>
-                    
                   </table>
                   <mat-paginator
   [length]="categories.length"
@@ -214,4 +188,6 @@
           
       </div>
     </div>
+  
+
   

@@ -38,4 +38,15 @@ export class CategoryService {
       // Envoyer une requête HTTP PUT pour basculer l'archivage
       return this.http.put<any>(url, {});
     }
+    getCategoryById(categoryId: number): Observable<Category> {
+      const url = `${this.apiUrl}/categories/${categoryId}`; // Update with your endpoint
+      return this.http.get<Category>(url);
+    }
+    deleteMultipleSubcategories(subcategoryIds: number[]): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}/delete-multiple`, { body: subcategoryIds });
+    }
+    deleteAllSubcategories(): Observable<any> {
+      return this.http.delete<any>(`${this.apiUrl}/delete-all`);
+    }
+    
 }

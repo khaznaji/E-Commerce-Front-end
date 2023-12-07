@@ -10,16 +10,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './admin/menu/menu.component';
 import { NotFoundComponent } from './admin/not-found/not-found.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { SubcategoryComponent } from './admin/subcategory/subcategory.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddCategoryComponent,
     MenuComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SubcategoryComponent
   ],
   imports: [
     BrowserModule,
+    MatPaginatorModule,
     AppRoutingModule, 
     FormsModule , 
     HttpClientModule, 

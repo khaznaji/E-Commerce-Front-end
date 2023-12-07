@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-add-category',
@@ -14,13 +15,17 @@ export class AddCategoryComponent implements OnInit {
   
   ngOnInit() {
     this.reloadData();
-    
+    this.updatePagedCategories();
+
   }
   
   newCategoryName = '';
   id=0;
   categories:any;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
   constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
   reloadData() {
     // Chargez toutes les catégories (à adapter selon vos besoins)
@@ -34,6 +39,19 @@ export class AddCategoryComponent implements OnInit {
       }
     );
   }
+  
+  onPageChange(event: any): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updatePagedCategories();
+  }
+
+  updatePagedCategories(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.filteredCategories = this.categories.slice(startIndex, endIndex);
+  }
+
   filterOption: 'all' | 'archive' | 'nonArchive' = 'all';
 
   // Utilisez cette propriété pour stocker les catégories filtrées
@@ -59,7 +77,7 @@ export class AddCategoryComponent implements OnInit {
     if (!this.selectedCategory) { 
       if (!this.newCategory.name || !this.file) {
         console.error(' category or image.');
-        this.toastr.error('Invalid image ', '', {
+        this.toastr.error('Name and Image are required   ', '', {
           positionClass: 'toast-top-center',
           timeOut: 5000,
           progressBar: true,
@@ -103,8 +121,14 @@ export class AddCategoryComponent implements OnInit {
       
       // Update the selected category
       if (!this.newCategory.name || !this.file) {
-        console.error('Invalid category or image.');
-        return;
+        console.error(' category or image.');
+        this.toastr.error('Name and Image are required   ', '', {
+          positionClass: 'toast-top-center',
+          timeOut: 5000,
+          progressBar: true,
+          toastClass: 'ngx-toastre',
+        });
+          return;
       }
 
       this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory, this.file).subscribe(
@@ -257,14 +281,23 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService.toggleArchive(categoryId).subscribe(
       (response) => {
         console.log('Archivage basculé avec succès.', response);
-        // Mettez à jour votre vue si nécessaire
+
+        // Display a success toastr message
+        
       },
       (error) => {
         console.error('Erreur lors du basculement de l\'archivage.', error);
-        // Gérez l'erreur selon vos besoins
+
+        // Display an error toastr message
+        this.toastr.success('Category and associated subcategories uptated successfully.', '', {
+          positionClass: 'toast-top-center',
+          timeOut: 5000,
+          progressBar: true,
+          toastClass: 'ngx-toastr',
+        });
       }
     );
-  }
+  } 
   applyFilter() {
     switch (this.filterOption) {
       case 'all':
@@ -282,5 +315,84 @@ export class AddCategoryComponent implements OnInit {
     }
   }
   
+  subcategoryIdsToDelete: number[] = [];
+
+  // ... (existing code)
+
+  toggleDelete(subcategoryId: number | undefined) {
+    if (subcategoryId === undefined) {
+      console.error('Invalid Categories  id.');
+      return;
+    }
   
-}
+    const index = this.subcategoryIdsToDelete.indexOf(subcategoryId);
+  
+    if (index !== -1) {
+      // Subcategory is already selected, so remove it
+      this.subcategoryIdsToDelete.splice(index, 1);
+    } else {
+      // Subcategory is not selected, so add it
+      this.subcategoryIdsToDelete.push(subcategoryId);
+    }
+  }
+  deleteSelectedSubcategories() {
+
+    if (this.subcategoryIdsToDelete.length === 0) {
+      console.error('No Categories selected for deletion.');
+      this.toastr.error('No Categories selected for deletion', '', {
+        positionClass: 'toast-top-center', // Positionnez-le en haut au centre
+        timeOut: 5000,
+        progressBar: true,
+        toastClass: 'ngx-toastre', // Appliquez les styles personnalisés
+        // Ajoutez d'autres options de personnalisation de style ici
+      });
+      return;
+    }
+    const warningMessage = 'Warning: Deleting selected categories will also delete associated subcategories. Are you sure you want to proceed?';
+    const userConfirmed = confirm(warningMessage);
+    this.categoryService.deleteMultipleSubcategories(this.subcategoryIdsToDelete).subscribe(
+      () => {
+        console.log('Categories deleted successfully.');
+        this.toastr.success('Categories deleted successfully', '', {
+          positionClass: 'toast-top-center', // Positionnez-le en haut au centre
+          timeOut: 5000,
+          progressBar: true,
+          toastClass: 'ngx-toastr', // Appliquez les styles personnalisés
+          // Ajoutez d'autres options de personnalisation de style ici
+        });
+        window.location.reload();
+
+        // Refresh the subcategories list or update the UI as needed
+      },
+      error => {
+        console.error('Error deleting subcategories:', error);
+      }
+    );
+  }
+ 
+  deleteAllSubcategories() {
+    const warningMessage = 'Warning: Deleting all categories will also delete associated subcategories. Are you sure you want to proceed?';
+    const userConfirmed = confirm(warningMessage);
+    if (userConfirmed) {
+      this.categoryService.deleteAllSubcategories().subscribe(
+        () => {
+          console.log('All Categories deleted successfully.');
+          this.toastr.success('All Categories deleted successfully', '', {
+            positionClass: 'toast-top-center', // Positionnez-le en haut au centre
+            timeOut: 5000,
+            progressBar: true,
+            toastClass: 'ngx-toastr', // Appliquez les styles personnalisés
+            // Ajoutez d'autres options de personnalisation de style ici
+          });      
+          window.location.reload();
+        },
+        error => {
+          console.error('Error deleting all Categories:', error);
+        }
+      );
+    } else {
+      console.log('Deletion cancelled by the user.');
+    }
+  }
+  }
+
