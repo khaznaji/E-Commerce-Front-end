@@ -48,5 +48,5 @@ export class CategoryService {
     deleteAllSubcategories(): Observable<any> {
       return this.http.delete<any>(`${this.apiUrl}/delete-all`);
     }
-    
+   
 }

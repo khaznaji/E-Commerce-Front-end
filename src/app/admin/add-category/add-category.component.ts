@@ -94,6 +94,7 @@ export class AddCategoryComponent implements OnInit {
         });
         return;
       }
+      
       this.categoryService.createCategory(this.newCategory, this.file).subscribe(
         (data) => {
           console.log('Category created successfully!', data);
@@ -104,7 +105,7 @@ export class AddCategoryComponent implements OnInit {
             toastClass: 'ngx-toastr', // Appliquez les styles personnalisés
             // Ajoutez d'autres options de personnalisation de style ici
           });
-          
+          console.log(this.categories.id)
           window.location.reload();
  
 

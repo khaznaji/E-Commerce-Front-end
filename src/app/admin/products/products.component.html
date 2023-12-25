@@ -1,0 +1,167 @@
+<div class="container">
+    <div class="main-body">
+      <!-- <form (ngSubmit)="addProject()" enctype="multipart/form-data"> -->
+        <form (ngSubmit)="add() "#foodForm="ngForm" enctype="multipart/form-data">
+
+        <div class="row gutters-sm mt-5">
+        <div class="col-md-4">
+          
+          <div class="card mb-3">
+         
+          </div>
+        </div>
+        <div class="col-md-8 container">
+          <div class="card">
+            <div class="card-body">
+             <div class="form-group mb-3">
+                  <label for="name">Name</label>
+                  <input class="form-control" type="text" id="name" [(ngModel)]="project.name" name="name" required #thisTitle="ngModel">
+        <div class="alert alert-danger" *ngIf="thisTitle.touched && thisTitle.invalid">
+          <div *ngIf="thisTitle?.errors?.['required']">Title is required!</div>
+        </div>
+      
+            </div>
+      
+                <div class="form-group mb-3">
+                  <label for="description">Description</label>
+                  <textarea class="form-control" id="description" [(ngModel)]="project.description" name="description" required #thisDesc="ngModel"></textarea>
+                  <div class="alert alert-danger" *ngIf="thisDesc.touched && thisDesc.invalid">
+                    <div *ngIf="thisDesc?.errors?.['required']">Description is required!</div>
+                  </div>
+                </div>
+      
+      
+                <div class="form-group mb-3">
+                  <label for="description">originalPrice</label>
+                  <input class="form-control" type="number" id="originalPrice" [(ngModel)]="project.originalPrice" name="tech" required #thisT="ngModel">
+                  <div class="alert alert-danger" *ngIf="thisT.touched && thisT.invalid">
+                    <div *ngIf="thisT?.errors?.['required']">Tech is required!</div>
+                  </div>
+                
+                
+                </div>
+                <div class="form-group mb-3">
+                    <label for="description">stock</label>
+                    <input class="form-control" type="number" id="stock" [(ngModel)]="project.stock" name="stock" required #stock="ngModel">
+                    <div class="alert alert-danger" *ngIf="stock.touched && stock.invalid">
+                      <div *ngIf="stock?.errors?.['required']">stock is required!</div>
+                    </div>
+                  
+                  
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="description">discountedPrice</label>
+                    <input class="form-control" type="number" id="discountedPrice" [(ngModel)]="project.discountedPrice" name="tech" required #discountedPrice="ngModel">
+                    <div class="alert alert-danger" *ngIf="discountedPrice.touched && discountedPrice.invalid">
+                        <div *ngIf="discountedPrice?.errors?.['required']">discountedPrice is required!</div>
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                  <label for="nbProjects">subCategory</label>
+                  <select class="form-control" id="subCategory" [(ngModel)]="selectedCategory" name="subCategory" required>
+                    <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.name }} </option>
+                  </select>      
+                  <div class="alert alert-danger" *ngIf="foodForm.controls['subCategory'].touched && foodForm.controls['subCategory'].invalid">
+                    <div *ngIf="foodForm.controls['subCategory'].errors">subCategory required!</div>
+                  </div>
+      
+                  <div class="form-group mb-3">
+                    <label for="color">color</label>
+                    <textarea class="form-control" id="color" [(ngModel)]="project.color" name="color" required #color="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="color.touched && color.invalid">
+                      <div *ngIf="color?.errors?.['required']">color is required!</div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="description">size</label>
+                    <textarea class="form-control" id="size" [(ngModel)]="project.size" name="size" required #size="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="size.touched && size.invalid">
+                      <div *ngIf="size?.errors?.['required']">size is required!</div>
+                    </div>
+                  </div><div class="form-group mb-3">
+                    <label for="material">material</label>
+                    <textarea class="form-control" id="material" [(ngModel)]="project.material" name="material" required #material="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="material.touched && material.invalid">
+                      <div *ngIf="material?.errors?.['required']">material is required!</div>
+                    </div>
+                  </div><div class="form-group mb-3">
+                    <label for="description">composition</label>
+                    <textarea class="form-control" id="description" [(ngModel)]="project.composition" name="composition" required #composition="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="composition.touched && composition.invalid">
+                      <div *ngIf="composition?.errors?.['required']">composition is required!</div>
+                    </div>
+                  </div>    
+                  <div class="form-group mb-3">
+                    <label for="description">col</label>
+                    <textarea class="form-control" id="col" [(ngModel)]="project.col" name="col" required #col="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="col.touched && col.invalid">
+                      <div *ngIf="col?.errors?.['required']">col is required!</div>
+                    </div>
+                  </div>  
+                  <div class="form-group mb-3">
+                    <label for="description">promo</label>
+                    <textarea class="form-control" id="promo" [(ngModel)]="project.promo" name="promo" required #promo="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="promo.touched && promo.invalid">
+                      <div *ngIf="col?.errors?.['required']">promo is required!</div>
+                    </div>
+                  </div>  
+                          
+                  <div class="form-group mb-3">
+                    <label for="description">onSale</label>
+                    <textarea class="form-control" id="onSale" [(ngModel)]="project.onSale" name="onSale" required #onSale="ngModel"></textarea>
+                    <div class="alert alert-danger" *ngIf="onSale.touched && onSale.invalid">
+                      <div *ngIf="onSale?.errors?.['required']">onSale is required!</div>
+                    </div>
+                  </div>  
+                          
+        </div>
+        <div class="form-group mb-3">
+         
+
+          <div class="form-group mb-3">
+            <div class="form-group mb-3">
+              <label for="nbExercices">Image</label>
+              <input type="file" name="files" multiple (change)="onFileChange($event)">
+              <div *ngIf="!selectedFile ">
+
+                Veuillez sélectionner une image.
+              </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="thumbnails-container">
+      <div *ngFor="let thumbnail of thumbnails" class="thumbnail">
+        <img [src]="thumbnail" alt="Thumbnail">
+      </div>
+    </div>
+  </div>
+</div>
+            </div>
+      
+</div>
+</div>
+             
+              </div>
+              <div class="row d-flex justify-content-end">
+                <div class="col-2">
+                  <button type="submit" [disabled]="!foodForm.valid">Submit</button>
+
+                </div>
+                <div></div>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="row mt-5">
+      </div>
+    </form>
+    </div>
+
+    <div class="row bg-white shadow d-flex justify-content-center">
+      <div class="col-6">
+        <!-- Place additional content here -->
+      </div>
+    </div>
+  </div>

@@ -12,6 +12,7 @@ import { NotFoundComponent } from './admin/not-found/not-found.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SubcategoryComponent } from './admin/subcategory/subcategory.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProductsComponent } from './admin/products/products.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AddCategoryComponent,
     MenuComponent,
     NotFoundComponent,
-    SubcategoryComponent
+    SubcategoryComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

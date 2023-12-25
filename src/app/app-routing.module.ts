@@ -4,11 +4,14 @@ import { AddCategoryComponent } from './admin/add-category/add-category.componen
 import { MenuComponent } from './admin/menu/menu.component';
 import { NotFoundComponent } from './admin/not-found/not-found.component';
 import { SubcategoryComponent } from './admin/subcategory/subcategory.component';
+import { ProductsComponent } from './admin/products/products.component';
 
 const routes: Routes = [
 {  path: 'admin', component: MenuComponent ,children: [
   {path:'add-category', component:AddCategoryComponent},
-  {path:'subcategory', component:SubcategoryComponent}
+  {path:'subcategory', component:SubcategoryComponent},
+  {path:'add-products', component:ProductsComponent},
+
 ]
 },
 {
