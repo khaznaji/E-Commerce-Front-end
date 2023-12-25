@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Product } from 'src/app/models/product';
@@ -31,7 +31,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     promo: ['',Validators.required],
     onSale: [false],
     subCategoryId: ['', Validators.required],
-    images: [null]
+    images: [null],
+
+
   });
 }
 
@@ -63,28 +65,32 @@ ngOnInit(): void {
   selectedFile: File[] = [];
 
   selectedImages: File[] = [];
+// In your component class
+availableSizes: string[] = ['S', 'XS', 'M', 'L', 'XL'];
+selectedSizes: { [key: string]: boolean } = {};
 
- 
+size!: NgModel; // or whatever type 'size' should be
+
 add() {
   console.log('Original Price (before toString):', this.project.originalPrice);
-  console.log('Discounted Price (before toString):', this.project.discountedPrice);
-
+  
   // Créer un nouvel objet FormData
   const formData = new FormData();
 
   // Ajouter les champs requis au FormData
   formData.append('name', this.project.name);
   formData.append('originalPrice', this.project.originalPrice.toString());
-  formData.append('discountedPrice', this.project.discountedPrice.toString());
+  formData.append('discountedPrice', (this.project.discountedPrice !== undefined ? this.project.discountedPrice : 0).toString());
   formData.append('description', this.project.description);
   formData.append('stock', this.project.stock.toString());
   formData.append('color', this.project.color);
-  formData.append('size', this.project.size);
-  formData.append('material', this.project.material);
+  for (const size of this.project.size) {
+    formData.append('size', size);
+  }  formData.append('material', this.project.material);
   formData.append('composition', this.project.composition);
   formData.append('col', this.project.col);
-  formData.append('promo', this.project.promo);
-  formData.append('onSale', this.project.onSale);
+  formData.append('promo', this.project.promo.toString());
+  formData.append('onSale', this.project.onSale.toString());
 
   // Ajouter la catégorie sélectionnée
   formData.append('subCategoryId', String(this.selectedCategory));
@@ -128,10 +134,22 @@ add() {
   thumbnails: string[] = []; // Tableau pour stocker les URL des miniatures générées
   onFileChange(event: any) {
     this.selectedFile = event.target.files;
-    
-    console.log('Selected Files:', this.selectedFile);
+  
+    // Générer les miniatures des images sélectionnées
+    this.thumbnails = [];
+    for (const file of this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.thumbnails.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   }
+ 
+  
+  i!: number ;
 
+ 
 selectedVideoUrl: string = '';
 selectedThumbnail: string = '';
 images: FileList | null = null;
@@ -139,6 +157,7 @@ images: FileList | null = null;
 onFileChanges(event: any) {
   this.images = event.target.files;
 }
+
 
 
 

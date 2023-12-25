@@ -11,11 +11,11 @@ export class Product {
     subCategoryId!: number;
     subCategory!: SubCategory; // Assuming you have a SubCategory model
     color!: string;
-    size!: string;
+     size: string[] = [];
     material!: string;
     composition!: string;
     col!: string;
-    promo!: string;
-    onSale!: string;
+    promo!: boolean;
+    onSale!: boolean;
     imageUrls!: string[];
 }
