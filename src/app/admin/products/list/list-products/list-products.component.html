@@ -1,0 +1,65 @@
+      <!-- Formulaire -->
+      <div class="card">
+        <div class="card-body">
+         
+        
+
+    <!-- Liste des catégories -->
+    <div class="col-md-">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">List Of Products</h4>
+            <div class="d-flex justify-content-end mb-3">
+              <!-- <button type="button" class="btn btn-danger" (click)="deleteAllSubcategories()"> Delete All Categories</button> -->
+</div>
+            <div>
+            <!-- Ajoutez le sélecteur de filtre -->
+          
+      
+              <!-- <div class="d-flex justify-content-end mb-3">
+                <button type="button"  class="btn btn-inverse-primary" (click)="showAddCategoryModal()">+ Category</button>
+                &nbsp;                    <button type="button" class="btn btn-inverse-danger "(click)="deleteSelectedSubcategories()">Delete Selected</button>
+
+              </div>           -->
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+
+                    <th>Stock</th>
+                     <th>Price</th>
+
+
+
+                  </tr>
+                </thead>
+                <tbody *ngIf="filteredCategories.length > 0; else noCategoriesFound">
+                  <tr *ngFor="let category of filteredCategories">
+                  
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                  <td>{{ category.stock }}</td>
+                  <td>{{ category.originalPrice }}</td>
+
+                  <button class="btn btn-link" (click)="details(category.id)">
+Details                  </button>
+                  </tr>
+                </tbody>
+                <ng-template #noCategoriesFound>
+                  <tr>
+                    <td colspan="5">No product found</td>
+                  </tr>
+                </ng-template>
+                
+              </table>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+</div>
+

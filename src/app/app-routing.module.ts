@@ -5,12 +5,16 @@ import { MenuComponent } from './admin/menu/menu.component';
 import { NotFoundComponent } from './admin/not-found/not-found.component';
 import { SubcategoryComponent } from './admin/subcategory/subcategory.component';
 import { ProductsComponent } from './admin/products/products.component';
+import { ListProductsComponent } from './admin/products/list/list-products/list-products.component';
+import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
 
 const routes: Routes = [
 {  path: 'admin', component: MenuComponent ,children: [
   {path:'add-category', component:AddCategoryComponent},
   {path:'subcategory', component:SubcategoryComponent},
   {path:'add-products', component:ProductsComponent},
+  {path:'list-products', component:ListProductsComponent},
+  {path:'detail-product/:id', component:DetailsProductsComponent},
 
 ]
 },

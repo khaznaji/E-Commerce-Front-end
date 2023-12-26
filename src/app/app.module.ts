@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SubcategoryComponent } from './admin/subcategory/subcategory.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductsComponent } from './admin/products/products.component';
+import { ListProductsComponent } from './admin/products/list/list-products/list-products.component';
+import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +24,12 @@ import { ProductsComponent } from './admin/products/products.component';
     MenuComponent,
     NotFoundComponent,
     SubcategoryComponent,
-    ProductsComponent
+    ProductsComponent,
+    ListProductsComponent,
+    DetailsProductsComponent
   ],
-  imports: [
+  imports: [NgbModule,
+    
     BrowserModule,
     MatPaginatorModule,
     AppRoutingModule, 
@@ -33,7 +39,7 @@ import { ProductsComponent } from './admin/products/products.component';
       timeOut: 5000,
       progressBar: true,
       // Ajoutez d'autres options de personnalisation de style ici
-    }),BrowserAnimationsModule
+    }),BrowserAnimationsModule, NgbModule
 
   ],
   providers: [],

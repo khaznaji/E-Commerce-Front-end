@@ -29,5 +29,10 @@ addProducts(product: FormData): Observable<Product> {
   headers.append('Content-Type', 'multipart/form-data');
   return this.http.post<Product>(`${this.apiUrl}`, product, { headers });
 }
-    
+getAll(): Observable<any> {
+  return this.http.get(`${this.apiUrl}`);
+}   
+getById(id: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}/${id}`);
+}
 }

@@ -1,0 +1,77 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <!-- Première colonne pour les détails du produit -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ product.name }}</h4>
+            <p class="mb-1">{{ product.description }}</p>
+
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div>
+                  <p class="mb-1">Stock: {{ product.stock }}</p>
+                  <p class="mb-1">Price: {{ product.originalPrice }}</p>
+                  <p class="mb-1">Col: {{ product.col }}</p>
+                  <p class="mb-1">Color: {{ product.color }}</p>
+                  <p class="mb-1">Composition: {{ product.composition }}</p>
+                  <p class="mb-1">Material: {{ product.material }}</p>
+                  <p class="mb-1">Size: {{ product.size }}</p>
+                  <p class="mb-1">En Promotion: {{ product.promo ? 'Yes' : 'No' }}</p>
+                  <p class="mb-1">Discounted Price: {{ product.discountedPrice !== 0 ? product.discountedPrice : '-' }}</p>
+
+                  <!-- <p class="mb-1">SubCategory: {{ getCategoryName(product.subCategoryId) }}</p> -->
+
+                  <td></td>
+
+
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+<!-- Ajoutez ces classes pour le carrousel -->
+<div class="col-md-3 container">
+  <div *ngIf="product.imageUrls" id="productCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let imageUrl of product.imageUrls; let i = index" [ngClass]="{ 'active': i === 0 }">
+        <img [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" style="width: 100%; height: 100%;object-fit: contain;" class="img-thumbnail" />
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ajoutez ces scripts à la fin de votre fichier HTML ou dans le ngOnInit de votre composant -->
+<!-- Ajoutez ces scripts à la fin de votre fichier HTML ou dans le ngOnInit de votre composant -->
+<script>
+  // Initialise le carrousel au chargement de la page
+  document.addEventListener('DOMContentLoaded', function () {
+    var productCarousel = $('#productCarousel').carousel();
+
+    // Défilement automatique toutes les 3 secondes
+    setInterval(function () {
+      productCarousel.carousel('next');
+
+      // Réinitialise le carrousel une fois qu'il atteint la dernière image
+      if (!productCarousel.find('.carousel-item.active').next().length) {
+        productCarousel.carousel(0);
+      }
+    }, 3000);
+  });
+</script>
+
+
+
+              
