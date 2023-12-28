@@ -16,6 +16,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProductsComponent } from './admin/products/products.component';
 import { ListProductsComponent } from './admin/products/list/list-products/list-products.component';
 import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
+import { MenufrontComponent } from './visitor/menufront/menufront.component';
+import { ListProductsFrontComponent } from './visitor/list-products-front/list-products-front.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { DetailsProductsComponent } from './admin/products/list/details-products
     SubcategoryComponent,
     ProductsComponent,
     ListProductsComponent,
-    DetailsProductsComponent
+    DetailsProductsComponent,
+    MenufrontComponent,
+    ListProductsFrontComponent
   ],
   imports: [NgbModule,
     

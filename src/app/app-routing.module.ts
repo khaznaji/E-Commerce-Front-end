@@ -7,6 +7,8 @@ import { SubcategoryComponent } from './admin/subcategory/subcategory.component'
 import { ProductsComponent } from './admin/products/products.component';
 import { ListProductsComponent } from './admin/products/list/list-products/list-products.component';
 import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
+import { MenufrontComponent } from './visitor/menufront/menufront.component';
+import { ListProductsFrontComponent } from './visitor/list-products-front/list-products-front.component';
 
 const routes: Routes = [
 {  path: 'admin', component: MenuComponent ,children: [
@@ -17,6 +19,10 @@ const routes: Routes = [
   {path:'detail-product/:id', component:DetailsProductsComponent},
 
 ]
+
+},
+{path: '', component: MenufrontComponent ,children: [
+  {path:'products', component:ListProductsFrontComponent},]
 },
 {
   path: 'not-found',
