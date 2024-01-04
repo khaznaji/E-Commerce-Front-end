@@ -18,6 +18,8 @@ import { ListProductsComponent } from './admin/products/list/list-products/list-
 import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
 import { MenufrontComponent } from './visitor/menufront/menufront.component';
 import { ListProductsFrontComponent } from './visitor/list-products-front/list-products-front.component';
+import { DetailProductsFrontComponent } from './visitor/detail-products-front/detail-products-front.component';
+import { UpdateProductsComponent } from './admin/products/list/update-products/update-products.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,9 @@ import { ListProductsFrontComponent } from './visitor/list-products-front/list-p
     ListProductsComponent,
     DetailsProductsComponent,
     MenufrontComponent,
-    ListProductsFrontComponent
-  ],
+    ListProductsFrontComponent,
+    DetailProductsFrontComponent,
+UpdateProductsComponent  ],
   imports: [NgbModule,
     
     BrowserModule,

@@ -1,0 +1,278 @@
+<style>
+    .thumbnails-container {
+     display: flex;
+     flex-wrap: wrap; /* Permet aux images de passer à la ligne si l'espace est insuffisant */
+   }
+   /* Cacher l'élément d'entrée de fichier par défaut */
+   input[type="file"] {
+     display: none;
+   }
+   .cancel-button {
+     color: red;
+   }
+   
+   .button-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center; /* Pour aligner les boutons au centre horizontalement */
+     margin-top: 5px; /* Espacement entre les boutons */
+   }
+   
+   /* Style du bouton personnalisé */
+   .custom-file-upload {
+     border: 1px solid #ccc;
+     display: inline-block;
+     padding: 6px 12px;
+     cursor: pointer;
+   }
+   
+   
+   .thumbnail {
+     margin-right: 10px; /* Espace entre les miniatures, ajustez selon vos besoins */
+   }
+   
+   .thumbnail img {
+     width: 100px;
+     height: 100px;
+     object-fit: cover;
+     border: 1px solid #ddd; /* Ajoute une bordure aux miniatures */
+     border-radius: 5px; /* Ajoute un peu de bord arrondi aux coins des miniatures */
+   }
+   
+     </style><div class="container">
+         <div class="main-body">
+           <!-- <form (ngSubmit)="addProject()" enctype="multipart/form-data"> -->
+             <form (ngSubmit)="add() "#foodForm="ngForm" enctype="multipart/form-data" class="mx-auto">
+   
+             <div class="row gutters-sm mt-5">
+             
+             <div class="col-md-8 container">
+               <div class="card">
+                 <div class="card-body">
+                   <div class="form-group mb-3">
+                     <!-- Bouton personnalisé -->
+                     <label class="custom-file-upload">
+                       Sélectionner les images
+                       <!-- Élément d'entrée de fichier caché -->
+                       <input type="file" name="files" multiple (change)="onFileChange($event)">
+                     </label>
+                     <!-- Message si aucun fichier n'est sélectionné -->
+                     <div *ngIf="!selectedFile ">
+                       Veuillez sélectionner une image.
+                     </div>
+                     <div class="row">
+                       <div class="col-md-12">
+                         <div class="thumbnails-container">
+                           <div *ngFor="let thumbnail of thumbnails; let i = index" class="thumbnail">
+                             <img [src]="thumbnail" alt="Thumbnail">
+                            
+                           </div>
+                         </div>
+                         
+                         
+                         
+                       </div>
+                     </div>
+     
+                 
+       </div>
+       <hr>
+                   <div class="form-row">
+   
+                   <div class="form-group col-md-6">
+                     <label for="name">Name</label>
+                       <input class="form-control" type="text" id="name" [(ngModel)]="project.name" name="name" required #thisTitle="ngModel">
+             <div class="alert alert-danger" *ngIf="thisTitle.touched && thisTitle.invalid">
+               <div *ngIf="thisTitle?.errors?.['required']">Title is required!</div>
+             </div>
+           
+                 </div>
+           
+                 <div class="form-group col-md-6">
+                   <label for="description">Description</label>
+                       <textarea class="form-control" id="description" [(ngModel)]="project.description" name="description" required #thisDesc="ngModel"></textarea>
+                       <div class="alert alert-danger" *ngIf="thisDesc.touched && thisDesc.invalid">
+                         <div *ngIf="thisDesc?.errors?.['required']">Description is required!</div>
+                       </div>
+                     </div>
+           
+           </div>
+           <div class="form-row">
+   
+   
+                     <div class="form-group col-md-6">
+                       <label for="description">originalPrice</label>
+                       <input class="form-control" type="number" id="originalPrice" [(ngModel)]="project.originalPrice" name="tech" required #thisT="ngModel">
+                       <div class="alert alert-danger" *ngIf="thisT.touched && thisT.invalid">
+                         <div *ngIf="thisT?.errors?.['required']">Tech is required!</div>
+                       </div>
+                     
+                     
+                     </div>
+                     <div class="form-group col-md-6">
+                         <label for="description">stock</label>
+                         <input class="form-control" type="number" id="stock" [(ngModel)]="project.stock" name="stock" required #stock="ngModel">
+                         <div class="alert alert-danger" *ngIf="stock.touched && stock.invalid">
+                           <div *ngIf="stock?.errors?.['required']">stock is required!</div>
+                         </div>
+                       
+                       
+                       </div>
+                       </div>
+                       <div class="form-row">
+   
+                        
+                     
+                     <div class="form-group col-md-6">
+                       <label for="nbProjects">subCategory</label>
+                       <select class="form-control" id="subCategory" [(ngModel)]="selectedCategory" name="subCategory" required>
+                         <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.name }} </option>
+                       </select>      
+                       <div class="alert alert-danger" *ngIf="foodForm.controls['subCategory'].touched && foodForm.controls['subCategory'].invalid">
+                         <div *ngIf="foodForm.controls['subCategory'].errors">subCategory required!</div>
+                       </div>
+           </div>
+           <div class="form-group col-md-6">
+             <label for="color">Colors</label>
+             <select class="form-control" id="color" [(ngModel)]="project.color" name="colors" required multiple #color="ngModel">
+               <option value="red">Red</option>
+               <option value="green">Green</option>
+               <option value="blue">Blue</option>
+               <option value="yellow">Yellow</option>
+               <option value="orange">Orange</option>
+               <option value="purple">Purple</option>
+               <option value="pink">Pink</option>
+               <option value="brown">Brown</option>
+               <option value="gray">Gray</option>
+               <option value="black">Black</option>
+               <option value="white">White</option>
+               <!-- Ajoutez d'autres options selon vos besoins -->
+             </select>
+             <div class="alert alert-danger" *ngIf="color.touched && color.invalid">
+               <div *ngIf="color?.errors?.['required']">Colors selection is required!</div>
+             </div>
+           </div>
+           
+             
+             
+             
+           </div>
+           <div class="form-row"> 
+                       <div class="form-group col-md-6">
+                         <label for="size">Sizes</label>
+                         <select class="form-control" id="size" [(ngModel)]="project.size" name="size" required #size="ngModel" multiple>
+                           <option value="S">S</option>
+                           <option value="M">M</option>
+                           <option value="L">L</option>
+                           <option value="XL">XL</option>
+                           <!-- Ajoutez d'autres options selon vos besoins -->
+                         </select>
+                         <div class="alert alert-danger" *ngIf="size.touched && size.invalid">
+                           <div *ngIf="size?.errors?.['required']">Sizes selection is required!</div>
+                         </div>
+                       </div>
+                       <div class="form-group col-md-6">
+                         <label for="material">Material</label>
+                         <select class="form-control" id="material" [(ngModel)]="project.material" name="material" required #material="ngModel">
+                           <option value="" disabled>Select material</option>
+                           <option value="cotton">Cotton</option>
+                           <option value="polyester">Polyester</option>
+                           <option value="wool">Wool</option>
+                           <option value="silk">Silk</option>
+                           <option value="linen">Linen</option>
+                           <option value="leather">Leather</option>
+                         </select>
+                         <div class="alert alert-danger" *ngIf="material.touched && material.invalid">
+                           <div *ngIf="material?.errors?.['required']">Material is required!</div>
+                         </div>
+                            
+                         <label for="description">Composition</label>
+                         <select type="text" class="form-control" id="description" [(ngModel)]="project.composition" name="composition" required #composition="ngModel">
+                           <option value="" disabled>Select Composition</option>
+                           <option value="80% Cotton , 20% Polyester">80% Cotton , 20% Polyester </option>
+                           <option value="80% Polyester , 20% Cotton">80% Polyester , 20% Cotton</option>
+                           <option value="80% Wool ,20% Cotton">80% Wool ,20% Cotton </option>
+                           <option value="80% Silk ,20% Cotton">80% Silk ,20% Cotton</option>
+                           <option value="80% Linen,20% Cotton">80% Linen,20% Cotton</option>
+                           <option value="80% Leather,20% Cotton">80% Leather,20% Cotton</option>
+                       </select> 
+                        <div class="alert alert-danger" *ngIf="composition.touched && composition.invalid">
+                           <div *ngIf="composition?.errors?.['required']">composition is required!</div>
+                         </div>
+                       </div>
+                       </div>
+                       <div class="form-row">
+   
+                     
+                         <div class="form-group col-md-6 ">
+                           <label for="onSale">On Sale</label>
+                           <select class="form-control" id="onSale" [(ngModel)]="project.onSale" name="onSale" required #onSale="ngModel">
+                             <option [ngValue]="true">Yes</option>
+                             <option [ngValue]="false">No</option>
+                           </select>
+                           <div class="alert alert-danger" *ngIf="onSale.touched && onSale.invalid">
+                             <div *ngIf="onSale?.errors?.['required']">On Sale selection is required!</div>
+                           </div>
+                         </div>
+                       <div class="form-group col-md-6">
+                         <label for="description">Type de Col</label>
+                         <select class="form-control" id="col" [(ngModel)]="project.col" name="col" required #col="ngModel">
+                         <option value="round">Round Collar</option>
+                         <option value="v-neck">V-Neck</option>
+                         <option value="button-down">Button-Down Collar</option>
+                         <option value="mandarin">Mandarin Collar</option>
+                     </select>
+                         <div class="alert alert-danger" *ngIf="col.touched && col.invalid">
+                           <div *ngIf="col?.errors?.['required']">col is required!</div>
+                         </div>
+                       </div>   
+                       </div>
+                       <div class="form-row">
+     
+                       
+                       <div class="form-group col-md-6">
+                         <label for="description">Promo</label>
+                         <select class="form-control" id="promo" [(ngModel)]="project.promo" name="promo" required #promo="ngModel">
+                           <option [ngValue]="true">Yes</option>
+                           <option [ngValue]="false">No</option>
+                         </select>
+                         <div class="alert alert-danger" *ngIf="promo.touched && promo.invalid">
+                           <div *ngIf="promo?.errors?.['required']">Promo is required!</div>
+                         </div>
+                       </div>
+                       <div class="form-group col-md-6" *ngIf="project.promo">
+                         <label for="description">Discounted Price</label>
+                       <input class="form-control" type="number" id="discountedPrice" [(ngModel)]="project.discountedPrice" name="tech" required #discountedPrice="ngModel">
+                       <div class="alert alert-danger" *ngIf="discountedPrice.touched && discountedPrice.invalid">
+                           <div *ngIf="discountedPrice?.errors?.['required']">discountedPrice is required!</div>
+                       </div>
+                   </div>
+                   </div>
+                                                   </div>
+                                                                       <div class="form-row">
+   
+                                                   
+                               
+             
+   
+        
+                 
+                   </div>
+                   <div class="row d-flex justify-content-end">
+                     <div class="col-2">
+                       <button type="submit" class="btn btn-primary mr-2"[disabled]="!foodForm.valid">Submit</button>
+   
+                     </div>
+                     <div></div>
+                     <br>
+                   </div>
+                 </div>
+               </div>
+   </div>
+           <div class="row mt-5">
+           </div>
+         </form>
+         </div>
+   
+         
+       </div>

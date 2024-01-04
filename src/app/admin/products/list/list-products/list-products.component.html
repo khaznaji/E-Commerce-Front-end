@@ -10,6 +10,9 @@
           <div class="card-body">
             <h4 class="card-title">List Of Products</h4>
             <div class="d-flex justify-content-end mb-3">
+              <button type="button" class="btn btn-inverse-danger "(click)="deleteSelectedSubcategories()">Delete Selected</button>
+              <button type="button" class="btn btn-danger" (click)="deleteAllSubcategories()"> Delete All Products</button>
+
               <!-- <button type="button" class="btn btn-danger" (click)="deleteAllSubcategories()"> Delete All Categories</button> -->
 </div>
             <div>
@@ -30,6 +33,7 @@
 
                     <th>Stock</th>
                      <th>Price</th>
+                     <th>Select To delete Multiple</th>
 
 
 
@@ -39,12 +43,21 @@
                   <tr *ngFor="let category of filteredCategories">
                   
                     <td>{{ category.name }}</td>
-                    <td>{{ category.description }}</td>
-                  <td>{{ category.stock }}</td>
+                    <td>{{ category.description.length > 20 ? category.description.slice(0, 20) + '...' : category.description }}</td>
+                    <td>{{ category.stock }}</td>
                   <td>{{ category.originalPrice }}</td>
+                  <td>
+                    <input type="checkbox" [checked]="subcategoryIdsToDelete.includes(category.id!)" (change)="toggleDelete(category.id)">
+                  </td>
+              <td>   
+                <button class="btn btn-link" (click)="details(category.id)">
+Details                  </button></td> 
+<td>                          <button type="button" class="btn btn-inverse-danger btn-fw" (click)="deleteEvents(category.id)">Delete</button>
+  <button class="btn btn-inverse-success btn-fw" (click)="updateEvent(category.id)">
+Update
+  </button>
+</td>
 
-                  <button class="btn btn-link" (click)="details(category.id)">
-Details                  </button>
                   </tr>
                 </tbody>
                 <ng-template #noCategoriesFound>

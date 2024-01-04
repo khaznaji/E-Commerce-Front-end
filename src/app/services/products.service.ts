@@ -29,10 +29,27 @@ addProducts(product: FormData): Observable<Product> {
   headers.append('Content-Type', 'multipart/form-data');
   return this.http.post<Product>(`${this.apiUrl}`, product, { headers });
 }
+  updateProducts(id: number , product: FormData): Observable<Product> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json'); // Add this line to set Accept header
+    
+    return this.http.put<Product>(`${this.apiUrl}/updateNew/${id}`, product, { headers });
+    
+  }
 getAll(): Observable<any> {
   return this.http.get(`${this.apiUrl}`);
 }   
 getById(id: number): Observable<any> {
   return this.http.get(`${this.apiUrl}/${id}`);
+}
+deleteEvent(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+}
+deleteMultipleSubcategories(subcategoryIds: number[]): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/delete-multiple`, { body: subcategoryIds });
+}
+deleteAllSubcategories(): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrl}/delete-all`);
 }
 }

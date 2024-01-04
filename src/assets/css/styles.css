@@ -7241,13 +7241,19 @@ body {
   border-radius: 50%;
 }
 .color-option .color-categories li a.tt-pink {
-  background-color: #2529db;
+  background-color: #ee27bc;
 }
 .color-option .color-categories li a.tt-blue {
-  background-color: #ea15b0;
+  background-color: #2529db;
 }
 .color-option .color-categories li a.tt-yellow {
   background-color: #ffd838;
+}
+.color-option .color-categories li a.tt-orange {
+  background-color: #ff7e38;
+}
+.color-option .color-categories li a.tt-purple {
+  background-color: #8f168f;
 }
 
 .form-control {

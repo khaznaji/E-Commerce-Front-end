@@ -9,6 +9,8 @@ import { ListProductsComponent } from './admin/products/list/list-products/list-
 import { DetailsProductsComponent } from './admin/products/list/details-products/details-products.component';
 import { MenufrontComponent } from './visitor/menufront/menufront.component';
 import { ListProductsFrontComponent } from './visitor/list-products-front/list-products-front.component';
+import { DetailProductsFrontComponent } from './visitor/detail-products-front/detail-products-front.component';
+import { UpdateProductsComponent } from './admin/products/list/update-products/update-products.component';
 
 const routes: Routes = [
 {  path: 'admin', component: MenuComponent ,children: [
@@ -17,12 +19,16 @@ const routes: Routes = [
   {path:'add-products', component:ProductsComponent},
   {path:'list-products', component:ListProductsComponent},
   {path:'detail-product/:id', component:DetailsProductsComponent},
+  {path:'update-product/:id', component:UpdateProductsComponent},
+
 
 ]
 
 },
 {path: '', component: MenufrontComponent ,children: [
-  {path:'products', component:ListProductsFrontComponent},]
+  {path:'products', component:ListProductsFrontComponent},
+  {path:'detail-product/:id', component:DetailProductsFrontComponent},
+]
 },
 {
   path: 'not-found',

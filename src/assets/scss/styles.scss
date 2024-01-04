@@ -1419,14 +1419,18 @@ body{
 				width: 20px;
 				display: block;
 				border-radius: 50%;
-				&.tt-pink{
-					background-color:#2529db;
-				}
+				
 				&.tt-blue{
-					background-color:#ea15b0;
+					background-color:#111c82;
 				}
 				&.tt-yellow{
 					background-color:#ffd838;
+				}
+				&.tt-green{
+					background-color:#1d8953;
+				}
+				&.tt-red{
+					background-color:#891d21;
 				}
 			}
 		}
