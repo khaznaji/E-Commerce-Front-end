@@ -204,7 +204,7 @@ input[type="file"] {
                     <div class="form-row">
 
                   
-                      <div class="form-group col-md-6 ">
+                      <!-- <div class="form-group col-md-6 ">
                         <label for="onSale">On Sale</label>
                         <select class="form-control" id="onSale" [(ngModel)]="project.onSale" name="onSale" required #onSale="ngModel">
                           <option [ngValue]="true">Yes</option>
@@ -213,7 +213,7 @@ input[type="file"] {
                         <div class="alert alert-danger" *ngIf="onSale.touched && onSale.invalid">
                           <div *ngIf="onSale?.errors?.['required']">On Sale selection is required!</div>
                         </div>
-                      </div>
+                      </div> -->
                     <div class="form-group col-md-6">
                       <label for="description">Type de Col</label>
                       <select class="form-control" id="col" [(ngModel)]="project.col" name="col" required #col="ngModel">

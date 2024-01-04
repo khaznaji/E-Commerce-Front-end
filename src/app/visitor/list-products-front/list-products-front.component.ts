@@ -27,4 +27,31 @@ export class ListProductsFrontComponent implements OnInit{
       }
     );
   }
+  openQuickView(productId: number) {
+    // Appel du service pour obtenir les détails du produit par ID
+    this.categoryService.getById(productId).subscribe((product) => {
+      // Stockage des détails du produit pour la vue rapide
+      this.quickViewProduct = product;
+    });
+  }
+  quickViewProduct: Product = new Product();
+  selectedColor: string = ''; // Pour stocker la couleur sélectionnée
+
+  selectColor(color: string): void {
+    this.selectedColor = color;
+    // Vous pouvez ajouter ici la logique supplémentaire en fonction de la couleur sélectionnée
+  }
+  currentIndex = 0;
+
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.quickViewProduct.imageUrls.length;
+  }
+
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.quickViewProduct.imageUrls.length) % this.quickViewProduct.imageUrls.length;
+  } 
+  redirectToProductDetails(productId: number) {
+    this.router.navigate(['/detail-product', productId]);
+  }
+  
 }

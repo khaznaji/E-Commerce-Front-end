@@ -7246,6 +7246,9 @@ body {
 .color-option .color-categories li a.tt-blue {
   background-color: #2529db;
 }
+.color-option .color-categories li a.tt-green {
+  background-color: #0a674f;
+}
 .color-option .color-categories li a.tt-yellow {
   background-color: #ffd838;
 }

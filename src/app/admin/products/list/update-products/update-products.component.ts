@@ -33,7 +33,10 @@ export class UpdateProductsComponent implements OnInit {
         this.project.originalPrice = this.food.originalPrice;
         this.project.discountedPrice = this.food.discountedPrice;
         this.project.stock = this.food.stock;
+      
+
         this.project.color = this.food.color;
+        
         this.project.size = this.food.size;
         this.project.material = this.food.material;
 
@@ -41,7 +44,7 @@ export class UpdateProductsComponent implements OnInit {
         this.project.material = this.food.material;
         this.project.col = this.food.col;
         this.project.promo = this.food.promo;
-        this.project.onSale = this.food.onSale;
+       // this.project.onSale = this.food.onSale;
         this.project.subCategoryId = this.food.subCategoryId;
         this.selectedCategory = this.food.subCategoryId.toString();
 
@@ -99,14 +102,15 @@ export class UpdateProductsComponent implements OnInit {
       formData.append('discountedPrice', (this.project.discountedPrice !== undefined ? this.project.discountedPrice : 0).toString());
       formData.append('description', this.project.description);
       formData.append('stock', this.project.stock.toString());
-      formData.append('color', this.project.color);
-      for (const size of this.project.size) {
+      for (const color of this.project.color) {
+        formData.append('color', color);
+      }       for (const size of this.project.size) {
         formData.append('size', size);
       }  formData.append('material', this.project.material);
       formData.append('composition', this.project.composition);
       formData.append('col', this.project.col);
       formData.append('promo', this.project.promo.toString());
-      formData.append('onSale', this.project.onSale.toString());
+     // formData.append('onSale', this.project.onSale.toString());
     
       // Ajouter la catégorie sélectionnée
       formData.append('subCategoryId', String(this.selectedCategory));

@@ -29,7 +29,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     composition: ['',Validators.required],
     col: ['',Validators.required],
     promo: ['',Validators.required],
-    onSale: [false],
     subCategoryId: ['', Validators.required],
     images: [null],
 
@@ -83,14 +82,16 @@ add() {
   formData.append('discountedPrice', (this.project.discountedPrice !== undefined ? this.project.discountedPrice : 0).toString());
   formData.append('description', this.project.description);
   formData.append('stock', this.project.stock.toString());
-  formData.append('color', this.project.color);
+  for (const color of this.project.color) {
+    formData.append('color', color);
+  } 
   for (const size of this.project.size) {
     formData.append('size', size);
   }  formData.append('material', this.project.material);
   formData.append('composition', this.project.composition);
   formData.append('col', this.project.col);
   formData.append('promo', this.project.promo.toString());
-  formData.append('onSale', this.project.onSale.toString());
+ // formData.append('onSale', this.project.onSale.toString());
 
   // Ajouter la catégorie sélectionnée
   formData.append('subCategoryId', String(this.selectedCategory));

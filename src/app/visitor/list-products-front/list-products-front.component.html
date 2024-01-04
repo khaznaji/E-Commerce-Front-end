@@ -1,4 +1,42 @@
-<nav aria-label="breadcrumb" class="w-100 float-left">
+<style>.image.zoom {
+    overflow: hidden;
+  }
+  .carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #660505;
+  cursor: pointer;
+}
+
+.carousel-control-icon {
+  display: inline-block;
+}
+
+  .carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-item {
+    flex: 0 0 100%;
+  }
+  
+  .active {
+    opacity: 1;
+  }
+  
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  </style><nav aria-label="breadcrumb" class="w-100 float-left">
     <ol class="breadcrumb parallax justify-content-center" data-source-url="../../../assets/img/banner/parallax.jpg" style="background-image: url(&quot;img/banner/parallax.jpg&quot;); background-position: 50% 0.809717%;">
       <li class="breadcrumb-item"><a href="#">Home</a></li>
       <li class="breadcrumb-item active" aria-current="page">category</li>
@@ -124,7 +162,7 @@
                                   <div class="product-layouts col-lg-3 col-md-3 col-sm-6 col-xs-6" *ngFor="let product of categories">
                                       <div class="product-thumb">
                                         <div class="image zoom">
-                                            <a href="product-details.html" *ngFor="let imageUrl of product.imageUrls; let i = index;">
+                                            <a (click)="redirectToProductDetails(product.id)" *ngFor="let imageUrl of product.imageUrls; let i = index;">
                                               <img *ngIf="i === 0" [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" alt="{{ product.name }}" />
                                               <img *ngIf="i === 1" [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" alt="04" class="second_image img-responsive" />
                                             </a>
@@ -132,7 +170,7 @@
                                           
                                           <div class="thumb-description">
                                               <div class="caption">
-                                                  <h4 class="product-title text-capitalize"><a href="product-details.html">{{ product.name }}</a></h4>
+                                                  <h4 class="product-title text-capitalize"><a (click)="redirectToProductDetails(product.id)" >{{ product.name }}</a></h4>
                                               </div>
                                               <!-- <div class="rating">
                                                   <div class="product-ratings d-inline-block align-middle">
@@ -150,7 +188,7 @@
                                                   <button type="button" class="btn btn-primary btn-cart" data-target="#cart-pop" data-toggle="modal"><i class="material-icons">shopping_cart</i><span>Add to cart</span></button>
                                                   <a href="wishlist.html" class="btn btn-primary btn-wishlist"><i class="material-icons">favorite</i><span>wishlist</span></a>
                                                   <button type="button" class="btn btn-primary btn-compare"><i class="material-icons">equalizer</i><span>Compare</span></button>
-                                                  <button type="button" class="btn btn-primary btn-quickview"  data-toggle="modal" data-target="#product_view"><i class="material-icons">visibility</i><span>Quick View</span></button>
+                                                  <button type="button" class="btn btn-primary btn-quickview"  (click)="openQuickView(product.id)" data-toggle="modal" data-target="#product_view"><i class="material-icons">visibility</i><span>Quick View</span></button>
                                               </div>										</div>
                                           </div>
                                       </div>
@@ -164,14 +202,14 @@
                                   <div class="product-layouts col-lg-6 col-md-6 col-sm-6 col-xs-6" *ngFor="let product of categories"   >
                                       <div class="product-thumb row">
                                           <div class="image zoom col-xs-12 col-sm-5 col-md-4">
-                                              <a href="product-details.html" class="d-block position-relative" *ngFor="let imageUrl of product.imageUrls; let i = index;">
+                                              <a (click)="redirectToProductDetails(product.id)" class="d-block position-relative" *ngFor="let imageUrl of product.imageUrls; let i = index;">
                                                   <img *ngIf="i === 0" [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" alt="{{ product.name }}"/>
                                                   <img *ngIf="i === 1" [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" alt="{{ product.name }}" class="second_image img-responsive"/></a>	
                                                  
                                                                                       </div>
                                           <div class="thumb-description col-xs-12  col-sm-7 col-md-8 position-static text-left">
                                               <div class="caption">
-                                                  <h4 class="product-title text-capitalize"><a href="product-details.html">{{ product.name }}</a></h4>
+                                                  <h4 class="product-title text-capitalize"><a (click)="redirectToProductDetails(product.id)" >{{ product.name }}</a></h4>
                                               </div>
                                               <div class="rating mb-10">
                                               <div class="product-ratings d-inline-block align-middle">
@@ -328,55 +366,31 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6 left-columm">
-                                    <div class="product-large-image tab-content">
-                                    <div class="tab-pane active" id="product-1" role="tabpanel" aria-labelledby="product-tab-1">
-                                        <div class="single-img img-full">
-                                            <a href="../../../assets/img/products/01.jpg"><img src="../../../assets/img/products/01.jpg" class="img-fluid" alt="" width="368" height="478"></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="product-2" role="tabpanel" aria-labelledby="product-tab-2">
-                                        <div class="single-img">
-                                            <a href="../../../assets/img/products/02.jpg"><img src="../../../assets/img/products/02.jpg" class="img-fluid" alt="" width="368" height="478"></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="product-3" role="tabpanel" aria-labelledby="product-tab-3">
-                                        <div class="single-img">
-                                            <a href="../../../assets/img/products/03.jpg"><img src="../../../assets/img/products/03.jpg" class="img-fluid" alt="" width="368" height="478"></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="product-4" role="tabpanel" aria-labelledby="product-tab-4">
-                                        <div class="single-img">
-                                            <a href="../../../assets/img/products/04.jpg"><img src="../../../assets/img/products/04.jpg" class="img-fluid" alt="" width="368" height="478"></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="product-5" role="tabpanel" aria-labelledby="product-tab-5">
-                                        <div class="single-img">
-                                            <a href="../../../assets/img/products/05.jpg"><img src="../../../assets/img/products/05.jpg" class="img-fluid" alt="" width="368" height="478"></a>
-                                        </div>
-                                    </div>
+                                    <div >
+                                        <div class="product-thumb">
+
+                                            <div class="image zoom">
+                                                <div class="carousel">
+                                                  <div *ngFor="let imageUrl of quickViewProduct.imageUrls; let i = index;" class="carousel-item" [ngClass]="{ 'active': i === currentIndex }">
+                                                    <img [src]="'../../../assets/E-Commerce-Image/Products/' + imageUrl.trim()" alt="{{ quickViewProduct.name }}" />
+                                                  </div>
+                                                </div>
+                                                <button (click)="prevSlide()" class="carousel-control-prev">
+                                                    <span class="carousel-control-icon" aria-hidden="true">&lt;</span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                  </button>
+                                                  <button (click)="nextSlide()" class="carousel-control-next">
+                                                    <span class="carousel-control-icon" aria-hidden="true">&gt;</span>
+                                                    <span class="visually-hidden">Next</span>
+                                                  </button>  </div>
+                                              
+                                              
+                                    
                             </div>
-                            <div class="small-image-list float-left w-100"> 
-                                            <div class="nav-add small-image-slider-single-product-tabstyle-3 owl-carousel" role="tablist">
-                                                <div class="single-small-image img-full">
-                                                    <a data-toggle="tab" id="product-tab-1" href="#product-1" class="img active"><img src="../../../assets/img/products/01.jpg" class="img-fluid" alt=""></a>
-                                                </div>
-                                                <div class="single-small-image img-full">
-                                                    <a data-toggle="tab" id="product-tab-2" href="#product-2" class="img"><img src="../../../assets/img/products/02.jpg" class="img-fluid" alt=""></a>
-                                                </div>
-                                                <div class="single-small-image img-full">
-                                                    <a data-toggle="tab" id="product-tab-3" href="#product-3" class="img"><img src="../../../assets/img/products/03.jpg" class="img-fluid" alt=""></a>
-                                                </div>
-                                                <div class="single-small-image img-full">
-                                                    <a data-toggle="tab" id="product-tab-4" href="#product-4" class="img"><img src="img/products/04.jpg" class="img-fluid" alt=""></a>
-                                                </div>
-                                                <div class="single-small-image img-full">
-                                                    <a data-toggle="tab" id="product-tab-5" href="#product-5" class="img"><img src="img/products/05.jpg" class="img-fluid" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
+                           </div>
                             </div>
                             <div class="col-md-6 product_content">
-                                <h4 class="product-title text-capitalize">Printed Polo Collar T-shirt</h4>
+                                <h4 class="product-title text-capitalize">{{quickViewProduct.name}}</h4>
                                 <div class="rating">
                                 <div class="product-ratings d-inline-block align-middle">
                                                                                             <span class="fa fa-stack"><i class="material-icons">star</i></span>
@@ -384,31 +398,27 @@
                                                    <span class="fa fa-stack"><i class="material-icons">star</i></span>
                                                    <span class="fa fa-stack"><i class="material-icons off">star</i></span>
                                                    <span class="fa fa-stack"><i class="material-icons off">star</i></span>			</div>							</div>
-                                <span class="description float-left w-100">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
-                                <h3 class="price float-left w-100"><span class="regular-price align-middle">$75.00</span><span class="old-price align-middle">$60.00</span></h3>
+                                <span class="description float-left w-100">{{quickViewProduct.description}}</span>
+                                <h3 class="price float-left w-100"><span class="regular-price align-middle">${{quickViewProduct.originalPrice}}</span>
+                                    <!-- <span class="old-price align-middle">$60.00</span> -->
+                                </h3>
                                 
                                 <div class="product-variants float-left w-100">
                                     <div class="col-md-4 col-sm-6 col-xs-12 size-options d-flex align-items-center">
                                                         <h5>Size:</h5>
-            
-                                            <select class="form-control" name="select">
-                                                        <option value="" selected="">Size</option>
-                                                        <option value="black">Medium</option>
-                                                        <option value="white">Large</option>
-                                                        <option value="gold">Small</option>
-                                                        <option value="rose gold">Extra large</option>
-                                            </select>
+                                                        <select class="form-control" name="select">
+                                                            <option value="" selected="">Size</option>
+                                                            <option *ngFor="let size of quickViewProduct.size" [value]="size">{{ size }}</option>
+                                                          </select>
                                     </div>
                                     <div class="color-option d-flex align-items-center">
                                                     <h5>color :</h5>
                                                     <ul class="color-categories">
-                                                        <li class="active">
-                                                            <a class="tt-pink" href="#" title="Pink"></a>                                            </li>
-                                                        <li>
-                                                            <a class="tt-blue" href="#" title="Blue"></a>                                            </li>
-                                                        <li>
-                                                            <a class="tt-yellow" href="#" title="Yellow"></a>                                            </li>
-                                                    </ul>
+                                                        <li *ngFor="let color of quickViewProduct.color?.split(',') || []">
+                                                            <a [class]="'tt-' + color.trim()" href="#" (click)="selectColor(color)" title="{{ color }}"></a>
+                                                          </li>
+                                                          
+                                                      </ul>
                                                 </div>
                                 </div>
                                 <div class="btn-cart d-flex align-items-center float-left w-100">
